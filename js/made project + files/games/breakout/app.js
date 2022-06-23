@@ -1,12 +1,14 @@
 const grid = document.querySelector('.grid') //class created with js if it didnt exist
+let score = document.querySelector('#score')
 
 const blockWidth = 100
 const blockHeight = 20
 const boardWidth = 560
+const boardHeight = 300
 const dia = 20
 let timerId
-let xDir = 2
-let yDir = 2
+let xDir = -2
+let yDir = -2
 
 const userStart = [230, 10]
 let curr = userStart
@@ -117,6 +119,7 @@ function moveBall() {
     bcurr[0] += xDir
     bcurr[1] -= yDir
     drawBall()
+    check()
 
 }
 
@@ -124,12 +127,40 @@ timerId = setInterval(moveBall, 30);
 
 //check for collisions
 
-fucn
+function changeDir() {
+    if (xDir === 2 && yDir === 2) {
+        yDir = -2
+        return
+    }
+    if (xDir === -2 && yDir === -2) {
+        yDir = 2
+        return
+    }
+    if (xDir === 2 && yDir === -2) {
+        xDir = -2
+        return
+    }
+    if (xDir === -2 && yDir === 2) {
+        xDir = 2
+        return
+    }
+}
 
 
 function check() {
     //check for wall collide
-    if (bcurr[0] >= (boardWidth - dia)) {
+    if (
+        bcurr[0] >= (boardWidth - dia) ||
+        bcurr[1] >= (boardWidth - dia) ||
+        bcurr[0] <= 0
+        // bcurr[1] 0
+    ) {
         changeDir()
+    }
+    //check for game over
+    if (bcurr[1] <= 0) {
+        clearInterval(timerId)
+        score.innerHTML = 'u lost'
+        document.removeEventListener('keydown', moveUser)
     }
 }
