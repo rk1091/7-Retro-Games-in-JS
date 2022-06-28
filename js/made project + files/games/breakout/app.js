@@ -99,7 +99,10 @@ function moveUser(e) {
     }
 }
 
+//adding start button
 document.addEventListener('keydown', moveUser)
+timerId = setInterval(moveBall, 30);
+
 
 //draw ball
 function drawBall() {
@@ -124,7 +127,6 @@ function moveBall() {
 
 }
 
-timerId = setInterval(moveBall, 30);
 
 //check for collisions
 
@@ -150,7 +152,7 @@ function changeDir() {
 
 function check() {
 
-    //
+    //block collision
     for (let i = 0; i < blocks.length; i++) {
         if (
             bcurr[0] > (blocks[i].bottomLeft[0]) &&
@@ -164,7 +166,23 @@ function check() {
             changeDir()
             disscore++
             score.innerHTML = disscore
+
+            //check for win
+            if (blocks.length === 0) //or blocks.length===0
+            {
+                score.innerHTML = "u won!"
+                clearInterval(timerId)
+                document.removeEventListener('keydown', moveUser)
+
+            }
         }
+    }
+    //user collision
+    if (
+        (bcurr[0] > curr[0] && bcurr[0] < curr[0] + blockWidth) &&
+        (bcurr[1] > curr[1] && bcurr[1] < curr[1] + blockHeight)
+    ) {
+        changeDir()
     }
 
 
