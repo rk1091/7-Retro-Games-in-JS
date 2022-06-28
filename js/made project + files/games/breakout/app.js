@@ -8,7 +8,8 @@ const boardHeight = 300
 const dia = 20
 let timerId
 let xDir = -2
-let yDir = -2
+let yDir = 2
+let disscore = 0
 
 const userStart = [230, 10]
 let curr = userStart
@@ -117,7 +118,7 @@ grid.appendChild(ball)
 //move ball
 function moveBall() {
     bcurr[0] += xDir
-    bcurr[1] -= yDir
+    bcurr[1] += yDir
     drawBall()
     check()
 
@@ -148,10 +149,29 @@ function changeDir() {
 
 
 function check() {
+
+    //
+    for (let i = 0; i < blocks.length; i++) {
+        if (
+            bcurr[0] > (blocks[i].bottomLeft[0]) &&
+            bcurr[0] < (blocks[i].bottomRight[0]) &&
+            (bcurr[1] + dia) > blocks[i].bottomLeft[1] &&
+            bcurr[1] < blocks[i].topLeft[1]
+        ) {
+            const allblocks = Array.from(document.querySelectorAll('.block'))
+            allblocks[i].classList.remove('block')
+            blocks.splice(i, 1)
+            changeDir()
+            disscore++
+            score.innerHTML = disscore
+        }
+    }
+
+
     //check for wall collide
     if (
         bcurr[0] >= (boardWidth - dia) ||
-        bcurr[1] >= (boardWidth - dia) ||
+        bcurr[1] >= (boardHeight - dia) ||
         bcurr[0] <= 0
         // bcurr[1] 0
     ) {
