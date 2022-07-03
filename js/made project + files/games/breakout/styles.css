@@ -29,3 +29,23 @@
     border-radius: 10px;
     background-color: rgb(187, 255, 0);
 }
+
+#btn {
+    position: absolute;
+    width: 80px;
+    height: 50px;
+    border-radius: 10px;
+    /* border-width: 50px; */
+    border: solid #a8a30b 5px;
+    background-color: rgb(170, 0, 255);
+    /* text-align: center; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 230px;
+    margin-left: 570px;
+    text-transform: uppercase;
+    cursor: pointer;
+    /* text-decorat; */
+    /* text-size-adjust: 30px; */
+}

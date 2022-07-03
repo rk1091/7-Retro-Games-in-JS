@@ -1,5 +1,8 @@
 const grid = document.querySelector('.grid') //class created with js if it didnt exist
 let score = document.querySelector('#score')
+let btn = document.querySelector('#btn')
+
+// btn.style.left = 310
 
 const blockWidth = 100
 const blockHeight = 20
@@ -100,8 +103,20 @@ function moveUser(e) {
 }
 
 //adding start button
-document.addEventListener('keydown', moveUser)
-timerId = setInterval(moveBall, 30);
+btn = document.getElementById('btn')
+btn.addEventListener('click', start)
+
+function start() {
+    document.addEventListener('keydown', moveUser)
+    timerId = setInterval(moveBall, 30);
+
+    btn.remove()
+
+}
+// const btn = document.createElement('div')
+// btn.classList.add('btn')
+
+// document.removeElement('btn')
 
 
 //draw ball
