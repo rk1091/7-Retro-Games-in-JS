@@ -1,7 +1,7 @@
 .grid {
     height: 360px;
     width: 360px;
-    border: rgb(151, 24, 151) 3px solid;
+    border: rgba(75, 13, 75, 0.888) 3px solid;
     display: flex;
     flex-wrap: wrap;
 }
@@ -12,23 +12,46 @@
 }
 
 .ending-block {
-    background-color: brown;
+    background-color: rgb(240, 13, 123);
 }
 
 .starting-block {
-    background-color: rgb(42, 165, 91);
+    background-color: rgb(247, 235, 4);
 }
 
-.log-left,
+
+/* .log-left,
 .log-right {
     background-color: lightblue;
-}
+} */
 
+
+/* 
 .car-left,
 .car-right {
+    background-color: lightgrey;
+} */
+
+.l1,
+.l2,
+.l3 {
+    background-color: rgb(165, 42, 71);
+}
+
+.l4,
+.l5 {
+    background-color: rgb(129, 200, 224);
+}
+
+.c1 {
+    background-color: rgba(51, 8, 51, 0.925);
+}
+
+.c2,
+.c3 {
     background-color: lightgrey;
 }
 
 .frog {
-    background-color: green;
+    background-color: rgba(58, 146, 58, 0.851);
 }
