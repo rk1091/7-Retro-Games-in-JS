@@ -10,3 +10,12 @@
     height: 20px;
     width: 20px;
 }
+
+.invader {
+    background-color: rgb(101, 30, 101);
+    border-radius: 10px;
+}
+
+.shooter {
+    background-color: rgb(101, 30, 30);
+}

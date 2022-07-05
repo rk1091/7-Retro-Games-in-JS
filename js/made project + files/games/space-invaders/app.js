@@ -1,6 +1,10 @@
 const grid = document.querySelector('.grid')
-    // const res = document.querySelector('#result')
-
+const res = document.querySelector('.result')
+let currShoot = 202
+let width = 15
+let direction = 1
+let invadersId
+let goingRight = true
 
 for (let i = 0; i < 225; i++) {
     const sqr = document.createElement('div')
@@ -17,6 +21,70 @@ const alienInvaders = [
 
 function draw() {
     for (let i = 0; i < alienInvaders.length; i++) {
-
+        sqr[alienInvaders[i]].classList.add('invader')
     }
 }
+
+draw()
+
+function remove() {
+    for (let i = 0; i < alienInvaders.length; i++) {
+        sqr[alienInvaders[i]].classList.remove('invader')
+    }
+}
+
+
+sqr[currShoot].classList.add('shooter')
+
+function moveShooter(e) {
+
+    sqr[currShoot].classList.remove('shooter')
+    switch (e.key) {
+        case 'ArrowLeft':
+            if (currShoot % width !== 0) currShoot -= 1
+            break;
+        case 'ArrowRight':
+            if (currShoot % width < width - 1) currShoot += 1
+            break;
+
+    }
+    sqr[currShoot].classList.add('shooter')
+
+
+}
+
+document.addEventListener('keydown', moveShooter)
+
+function moveInvaders() {
+    const leftEdge = alienInvaders[0] % width === 0
+    const rightEdge = alienInvaders[alienInvaders.length - 1] % width === width - 1
+    remove()
+
+    if (rightEdge && goingRight) {
+        for (let i = 0; i < alienInvaders.length; i++) {
+            alienInvaders[i] += width + 1
+            direction = -1
+            goingRight = false
+        }
+    }
+
+    if (leftEdge && !goingRight) {
+        for (let i = 0; i < alienInvaders.length; i++) {
+            alienInvaders[i] += width - 1
+            direction = 1
+            goingRight = true
+        }
+    }
+
+    for (let i = 0; i < alienInvaders.length; i++) {
+        alienInvaders[i] += direction
+    }
+    draw()
+
+    if (sqr[currShoot].classList.contains('invader', 'shooter')) {
+        res.innerHTML = 'GAME OVER'
+        clearInterval(invadersId)
+    }
+}
+
+invadersId = setInterval(moveInvaders, 500)
