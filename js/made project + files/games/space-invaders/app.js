@@ -5,6 +5,8 @@ let width = 15
 let direction = 1
 let invadersId
 let goingRight = true
+let alienRemoved = []
+let results = 0
 
 for (let i = 0; i < 225; i++) {
     const sqr = document.createElement('div')
@@ -21,7 +23,8 @@ const alienInvaders = [
 
 function draw() {
     for (let i = 0; i < alienInvaders.length; i++) {
-        sqr[alienInvaders[i]].classList.add('invader')
+        if (!alienRemoved.includes(i))
+            sqr[alienInvaders[i]].classList.add('invader')
     }
 }
 
@@ -85,6 +88,52 @@ function moveInvaders() {
         res.innerHTML = 'GAME OVER'
         clearInterval(invadersId)
     }
+
+    for (let i = 0; i < alienInvaders.length; i++) {
+        if (alienInvaders[i] > sqr.length) {
+            res.innerHTML = 'GAME OVER'
+            clearInterval(invadersId)
+        }
+    }
+    if (alienRemoved.length === alienInvaders.length) {
+        res.innerHTML = 'YOU WIN'
+        clearInterval(invadersId)
+        document.removeEventListener('keydown', shoot)
+        document.removeEventListener('keydown', moveShooter)
+    }
+
 }
 
 invadersId = setInterval(moveInvaders, 500)
+
+function shoot(e) {
+    let laserId
+    let currlaser = currShoot
+
+    function movelaser() {
+        sqr[currlaser].classList.remove('laser')
+        currlaser -= width
+        sqr[currlaser].classList.add('laser')
+
+        if (sqr[currlaser].classList.contains('invader')) {
+            sqr[currlaser].classList.remove('laser')
+            sqr[currlaser].classList.remove('invader')
+            sqr[currlaser].classList.add('boom')
+
+            setInterval(() => sqr[currlaser].classList.remove('boom'), 300)
+            clearInterval(laserId)
+
+            const alienRemoval = alienInvaders.indexOf(currlaser)
+            alienRemoved.push(alienRemoval)
+            results++
+            res.innerHTML = results
+
+        }
+    }
+    switch (e.key) {
+        case 'ArrowUp':
+            laserId = setInterval(movelaser, 100)
+    }
+}
+
+document.addEventListener('keydown', shoot)
